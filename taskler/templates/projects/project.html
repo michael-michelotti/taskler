@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+  <div>
+    <h1>Project</h1>
+    <h1>{{ project.title }}</h1>
+    <p>{{ project.description }}</p>
+    <p>Start Date: {{ project.start_date }}</p>
+    <p>End Date: {{ project.end_date }}</p>
+    <p>Current Status: {{ project.status }}</p>
+  </div>
+  <div>
+    <h3>Created</h3>
+    {% for task in project.tasks %}
+      {% if task.status == 'Created' %}
+        <div>
+          <h3><a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a></h3>
+          <p>{{ task.description }}</p>
+          <p>Due: {{ task.date_due.date() }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <h3>In Work</h3>
+    {% for task in project.tasks %}
+      {% if task.status == 'In Work' %}
+        <div>
+          <h3><a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a></h3>
+          <p>{{ task.description }}</p>
+          <p>Due: {{ task.date_due.date() }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <h3>Complete</h3>
+    {% for task in project.tasks %}
+      {% if task.status == 'Complete' %}
+        <div>
+          <h3><a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a></h3>
+          <p>{{ task.description }}</p>
+          <p>Due: {{ task.date_due.date() }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <div>
+      {% if not project.tasks %}
+        <h2>This project currently has no associated tasks,
+          <a href="{{ url_for('tasks.new_project_task', project_id=project.id) }}">Create One Here!</a>
+        </h2>
+      {% endif %}
+    </div>
+  </div>
+  <div>
+    <a class="btn btn-outline-info" href="{{ url_for('projects.new_project_task', project_id=project.id) }}">New Task</a>
+  </div>
+  {% block task_form %}
+  {% endblock %}
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <div>
+    <h1>Title: {{ task.title }}</h1>
+    <div><a href="{{ url_for('tasks.update_task', task_id=task.id) }}">Update</a></div>
+    <div><a href="{{ url_for('tasks.delete_task', task_id=task.id) }}">Delete</a></div>
+
+    {% if task.description %}
+      <p>Description: {{ task.description }}</p>
+    {% endif%}
+
+    {% if task.date_due %}
+      <p>Due: {{ task.date_due.date() }}</p>
+    {% endif %}
+
+    {% if task.project %}
+      <h2>Parent project of this task:</h2>
+      <p><a href="{{ url_for('projects.project', project_id=task.project.id) }}">{{ task.project.title }}</a></p>
+    {% else %}
+      <h2>There is no parent project associated with this task</h2>
+    {% endif %}
+
+    {% if task.subtypes %}
+    <h2>Subtypes applicable to this task:</h2>
+      {% for subtype in task.subtypes %}
+        <p>{{ subtype.type }}</p>
+      {% endfor %}
+    {% else %}
+      <h2>There are no subtypes associated with this task</h2>
+    {% endif %}
+  </div>
+{% endblock content %}

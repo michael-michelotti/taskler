@@ -1,0 +1,93 @@
+{% if title %}
+  <h1>{{ title }}</h1>
+{% endif %}
+<div>
+  <h2>Create New Task</h2>
+  <form method="POST" action="">
+    {{ form.csrf_token }}
+    <fieldset>
+      <div>
+        {{ form.title.label }}
+        {% if form.title.errors %}
+          {{ form.title }}
+          {% for error in form.title.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.title }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.description.label }}
+        {% if form.description.errors %}
+          {{ form.description }}
+          {% for error in form.description.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.description }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.start_date.label }}
+        {% if form.start_date.errors %}
+          {{ form.start_date }}
+          {% for error in form.start_date.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.start_date }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.date_due.label }}
+        {% if form.date_due.errors %}
+          {{ form.date_due }}
+          {% for error in form.date_due.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.date_due }}
+        {% endif %}
+      </div>
+      {% if not project %}
+        <div>
+          {{ form.project_name.label }}
+          {% if form.project_name.errors %}
+            {{ form.project_name }}
+            {% for error in form.project_name.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          {% else %}
+            {{ form.project_name }}
+          {% endif %}
+        </div>
+      {% endif %}
+      <div>
+        {{ form.status.label }}
+        {% if form.status.errors %}
+          {{ form.status }}
+          {% for error in form.status.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.status }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.subtypes.label }}
+        {% if form.subtypes.errors %}
+          {{ form.subtypes }}
+          {% for error in form.subtypes.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.subtypes }}
+        {% endif %}
+      </div>
+    </fieldset>
+    <div>
+      {{ form.submit }}
+    </div>
+  </form>
+</div>

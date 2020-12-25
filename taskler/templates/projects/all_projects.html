@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <div>
+    {% for project in projects %}
+      <div>
+        <h1><a href="{{ url_for('projects.project', project_id=project.id) }}">{{ project.title }}</a></h1>
+      </div>
+      <div>
+        <p>{{ project.description }}</p>
+      </div>
+      <div>
+        <p>{{ project.start_date }}</p>
+      </div>
+      <div>
+        <p>{{ project.end_date }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}

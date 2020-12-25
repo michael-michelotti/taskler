@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+  <div>
+    {% for subtype in subtypes %}
+      <div>
+        <h1>{{ subtype.type }}</h1>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="btn btn-outline-info">
+    <a href="{{ url_for('subtypes.new_subtype') }}">New</a>
+  </div>
+{% endblock content %}
