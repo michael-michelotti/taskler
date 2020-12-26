@@ -19,6 +19,9 @@ class Project(Base):
 
     tasks = relationship('Task', back_populates='project')
 
+    def __repr__(self):
+        return f'<Project(title={self.title}, date_created={self.date_created}, status={self.status}>'
+
 
 class Task(Base):
     __tablename__ = 'tasks'

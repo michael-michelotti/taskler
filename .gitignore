@@ -3,9 +3,8 @@ venv
 playground.py
 design_plan.txt
 taskler/__pycache__
-__pycache__
 taskler/main/__pycache__
 taskler/projects/__pycache__
 taskler/subtypes/__pycache__
 taskler/tasks/__pycache__
-taskler/templates/__pycache__
+__pycache__
