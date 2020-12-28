@@ -8,41 +8,55 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
   <title>Taskler: A Ler for Tasks</title>
 </head>
 <body>
-<div class="container">
-  <div>
-    <div class="m-1">
-      <a href="{{ url_for('main.home') }}">Home</a>
+  <div class="wrapper">
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Tasklr Navigator</h3>
+      </div>
+      <ul class="list-unstyled-components">
+        <li>
+          <a href="{{ url_for('main.home') }}">Home</a>
+        </li>
+        <li>
+          <a href="projectNav" data-toggle="collapse" aria-expanded="flase" class="dropdown-toggle">Your Projects</a>
+          <ul>
+
+          </ul>
+        </li>
+        <li>
+          <a href="{{ url_for('subtypes.all_subtypes') }}">Create New Subtypes</a>
+        </li>
+<!--        <div class="m-1">
+          <a class="mr-1" href="{{ url_for('projects.new_project') }}">New Project</a>
+          <a href="{{ url_for('projects.all_projects') }}">All Projects</a>
+        </div>
+        <div class="m-1">
+          <a class="mr-1" href="{{ url_for('tasks.new_task') }}">New Task</a>
+          <a href="{{ url_for('tasks.all_tasks') }}">All Tasks</a>
+        </div>-->
+
+      </ul>
+    </nav>
+    <div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
     </div>
-    <div class="m-1">
-      <a class="mr-1" href="{{ url_for('projects.new_project') }}">New Project</a>
-      <a href="{{ url_for('projects.all_projects') }}">All Projects</a>
-    </div>
-    <div class="m-1">
-      <a class="mr-1" href="{{ url_for('tasks.new_task') }}">New Task</a>
-      <a href="{{ url_for('tasks.all_tasks') }}">All Tasks</a>
-    </div>
-    <div class="m-1">
-      <a class="mr-1" href="{{ url_for('subtypes.all_subtypes') }}">Create New Subtypes</a>
-    </div>
+      {% block content %}
+      {% endblock %}
   </div>
-  <div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-  </div>
-    {% block content %}
-    {% endblock %}
-</div>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

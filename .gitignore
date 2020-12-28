@@ -1,7 +1,7 @@
 venv
 .idea
 playground.py
-design_plan.txt
+design-plan.txt
 taskler/__pycache__
 taskler/main/__pycache__
 taskler/projects/__pycache__
