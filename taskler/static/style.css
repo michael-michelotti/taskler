@@ -1,22 +1,55 @@
+:root {
+  --container-bg: #eee;
+  --element-bg: #ddd;
+  --body-bg: #fff;
+  --subelement-bg: #ccc;
+}
+
 body {
-  background: #eee;
+  background: var(--body-bg);
 }
 
 nav {
-  background: #ddd;
+  background: var(--element-bg);
+}
+
+.container {
+  background: var(--container-bg);
 }
 
 .wrapper {
   display: flex;
-
 }
 
 #sidebar {
   width: 250px;
   height: 100vh;
-  align-items: stretch;
+  position: fixed;
 }
 
-a[data-toggle="collapse"] {
-    position: relative;
+#project-card {
+  background: var(--element-bg);
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+.project-card-child {
+  width: 33%;
+}
+
+.project-card-title {
+  width: 100%;
+}
+
+.project-card-desc {
+  width: 100%;
+}
+
+.project-status {
+  background: #bbb;
+}
+
+.task-card {
+  background: var(--element-bg);
 }

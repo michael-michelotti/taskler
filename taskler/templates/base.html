@@ -11,7 +11,7 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
-  <title>Taskler: A Lr for Tasks</title>
+  <title>Tasklr: A Lr for Tasks</title>
 </head>
 <body>
   <div class="wrapper">
@@ -58,8 +58,10 @@
         {% endif %}
       {% endwith %}
     </div>
+    <div id="content" class="container">
       {% block content %}
       {% endblock %}
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

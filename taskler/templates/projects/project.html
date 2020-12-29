@@ -1,39 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-  <div>
-    <h1>Project</h1>
-    <h1>{{ project.title }}</h1>
-    <p>{{ project.description }}</p>
-    <p>Start Date: {{ project.start_date }}</p>
-    <p>End Date: {{ project.end_date }}</p>
-    <p>Current Status: {{ project.status }}</p>
+  <div id="project-card">
+    <h1 class="project-card-title">{{ project.title }}</h1>
+    <p class="project-card-desc">Description: {{ project.description }}</p>
+    {% if project.start_date %}
+      <p class="project-card-child">Start Date: {{ project.start_date.date() }}</p>
+    {% else %}
+      <p class="project-card-child">No Start Date</p>
+    {% endif %}
+    {% if project.end_date %}
+      <p class="project-card-child">End Date: {{ project.end_date.date() }}</p>
+    {% else %}
+      <p class="project-card-child">No End Date</p>
+    {% endif %}
+    <p class="project-card-child">Current Status: {{ project.status }}</p>
   </div>
   <div>
-    <h3>Created</h3>
+    <div class="project-status">Created</div>
     {% for task in project.tasks %}
       {% if task.status == 'Created' %}
-        <div>
-          <h3><a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a></h3>
+        <div class="task-card">
+          <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
           <p>{{ task.description }}</p>
           <p>Due: {{ task.date_due.date() }}</p>
         </div>
       {% endif %}
     {% endfor %}
-    <h3>In Work</h3>
+    <div class="project-status">In Work</div>
     {% for task in project.tasks %}
       {% if task.status == 'In Work' %}
-        <div>
-          <h3><a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a></h3>
+        <div class="task-card">
+          <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
           <p>{{ task.description }}</p>
           <p>Due: {{ task.date_due.date() }}</p>
         </div>
       {% endif %}
     {% endfor %}
-    <h3>Complete</h3>
+    <div class="project-status">Complete</div>
     {% for task in project.tasks %}
       {% if task.status == 'Complete' %}
-        <div>
-          <h3><a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a></h3>
+        <div class="task-card">
+          <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
           <p>{{ task.description }}</p>
           <p>Due: {{ task.date_due.date() }}</p>
         </div>
@@ -41,9 +48,9 @@
     {% endfor %}
     <div>
       {% if not project.tasks %}
-        <h2>This project currently has no associated tasks,
+        <div class="task-card">This project currently has no associated tasks,
           <a href="{{ url_for('tasks.new_project_task', project_id=project.id) }}">Create One Here!</a>
-        </h2>
+        </div>
       {% endif %}
     </div>
   </div>
