@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
   <div id="project-card">
-    <h1 class="project-card-title">{{ project.title }}</h1>
-    <p class="project-card-desc">Description: {{ project.description }}</p>
+    <div class="card-title">{{ project.title }}</div>
+    <div class="card-desc">Description: {{ project.description }}</div>
     {% if project.start_date %}
-      <p class="project-card-child">Start Date: {{ project.start_date.date() }}</p>
+      <p class="card-child">Start Date: {{ project.start_date.date() }}</p>
     {% else %}
-      <p class="project-card-child">No Start Date</p>
+      <p class="card-child">No Start Date</p>
     {% endif %}
     {% if project.end_date %}
-      <p class="project-card-child">End Date: {{ project.end_date.date() }}</p>
+      <p class="card-child">End Date: {{ project.end_date.date() }}</p>
     {% else %}
-      <p class="project-card-child">No End Date</p>
+      <p class="card-child">No End Date</p>
     {% endif %}
-    <p class="project-card-child">Current Status: {{ project.status }}</p>
+    <p class="card-child">Current Status: {{ project.status }}</p>
   </div>
   <div>
     <div class="project-status">Created</div>

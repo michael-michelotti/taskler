@@ -1,32 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
   <div>
-    <h1>Title: {{ task.title }}</h1>
-    <div><a href="{{ url_for('tasks.update_task', task_id=task.id) }}">Update</a></div>
-    <div><a href="{{ url_for('tasks.delete_task', task_id=task.id) }}">Delete</a></div>
+    <div class="card-title">{{ task.title }}</div>
 
     {% if task.description %}
-      <p>Description: {{ task.description }}</p>
+      <div class="card-desc">Description: {{ task.description }}</div>
     {% endif%}
 
     {% if task.date_due %}
-      <p>Due: {{ task.date_due.date() }}</p>
+      <div class="card-child">Due: {{ task.date_due.date() }}</div>
     {% endif %}
 
+    <div><a class="btn btn-info" href="{{ url_for('tasks.update_task', task_id=task.id) }}">Update</a></div>
+    <div><a class="btn btn-danger" href="{{ url_for('tasks.delete_task', task_id=task.id) }}">Delete</a></div>
+
     {% if task.project %}
-      <h2>Parent project of this task:</h2>
-      <p><a href="{{ url_for('projects.project', project_id=task.project.id) }}">{{ task.project.title }}</a></p>
+      <div class="project-status">Parent project of this task</div>
+      <div><a href="{{ url_for('projects.project', project_id=task.project.id) }}">{{ task.project.title }}</a></div>
     {% else %}
-      <h2>There is no parent project associated with this task</h2>
+      <div>This task is not associated with a project</div>
     {% endif %}
 
     {% if task.subtypes %}
-    <h2>Subtypes applicable to this task:</h2>
+    <div class="project-status">Subtypes</div>
       {% for subtype in task.subtypes %}
-        <p>{{ subtype.type }}</p>
+        <div class="card-child">{{ subtype.type }}</div>
       {% endfor %}
     {% else %}
-      <h2>There are no subtypes associated with this task</h2>
+      <div class="project-status">There are no subtypes associated with this task</div>
     {% endif %}
   </div>
 {% endblock content %}

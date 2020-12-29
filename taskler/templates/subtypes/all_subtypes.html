@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-  <div>
+  <div class="subtype-card">
+    <div class="subtype-title">All Subtypes</div>
     {% for subtype in subtypes %}
-      <div>
-        <h1>{{ subtype.type }}</h1>
-      </div>
+      <div class="card-child">{{ subtype.type }}</div>
     {% endfor %}
   </div>
   <div class="btn btn-outline-info">

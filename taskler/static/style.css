@@ -34,15 +34,17 @@ nav {
   flex-flow: row wrap;
 }
 
-.project-card-child {
-  width: 33%;
+.card-child {
+  display: flex;
 }
 
-.project-card-title {
+.card-title {
   width: 100%;
+  font-weight: bold;
+  font-size: 30px;
 }
 
-.project-card-desc {
+.card-desc {
   width: 100%;
 }
 
@@ -52,4 +54,10 @@ nav {
 
 .task-card {
   background: var(--element-bg);
+}
+
+.subtype-title {
+  background: var(--element-bg);
+  font-weight: bold;
+  font-size: 20px;
 }
