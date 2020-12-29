@@ -47,8 +47,7 @@ def new_project_task(project_id):
 
 @projects.route('/project/all')
 def all_projects():
-    my_projects = db_session.query(Project).all()
-    return render_template('projects/all_projects.html', projects=my_projects)
+    return render_template('projects/all_projects.html')
 
 
 @projects.route('/project/<int:project_id>')

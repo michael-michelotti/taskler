@@ -1,9 +1,22 @@
+body {
+  background: #eee;
+}
+
+nav {
+  background: #ddd;
+}
+
 .wrapper {
   display: flex;
-  width: 100%;
+
+}
+
+#sidebar {
+  width: 250px;
+  height: 100vh;
   align-items: stretch;
 }
 
-body {
-  background: #eeeeee;
+a[data-toggle="collapse"] {
+    position: relative;
 }

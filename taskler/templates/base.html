@@ -11,7 +11,7 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
-  <title>Taskler: A Ler for Tasks</title>
+  <title>Taskler: A Lr for Tasks</title>
 </head>
 <body>
   <div class="wrapper">
@@ -24,9 +24,13 @@
           <a href="{{ url_for('main.home') }}">Home</a>
         </li>
         <li>
-          <a href="projectNav" data-toggle="collapse" aria-expanded="flase" class="dropdown-toggle">Your Projects</a>
-          <ul>
-
+          <a href="#projectNav" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Projects</a>
+          <ul class="collapse-list-unstyled" id="projectNav">
+            {% for project in projects %}
+              <li>
+                <a href="{{ url_for('projects.project', project_id=project.id) }}">{{ project.title }}</a>
+              </li>
+            {% endfor %}
           </ul>
         </li>
         <li>
