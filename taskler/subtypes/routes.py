@@ -34,5 +34,5 @@ def delete_subtype(subtype_id):
         db_session.commit()
         flash('Your subtype has been deleted!', 'success')
         return redirect(url_for('subtypes.all_subtypes'))
-    flash('Post deletion failed!', 'danger')
+    flash('Subtype deletion failed!', 'danger')
     return redirect(url_for('subtypes.all_subtypes'))

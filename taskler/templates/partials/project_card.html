@@ -1,0 +1,64 @@
+<div id="project-card">
+  <div class="card-title">{{ project.title }}</div>
+  <div class="card-desc">Description: {{ project.description }}</div>
+  {% if project.start_date %}
+    <div class="card-child">Start Date: {{ project.start_date.date() }}</div>
+  {% else %}
+    <div class="card-child">No Start Date</div>
+  {% endif %}
+  {% if project.end_date %}
+    <div class="card-child">End Date: {{ project.end_date.date() }}</div>
+  {% else %}
+    <div class="card-child">No End Date</div>
+  {% endif %}
+  <div class="card-child">Current Status: {{ project.status }}</div>
+</div>
+<div>
+  <div class="project-status">Created</div>
+  {% for task in project.tasks %}
+    {% if task.status == 'Created' %}
+      <div class="task-card">
+        <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
+        <div>{{ task.description }}</div>
+        <div>Due: {{ task.date_due.date() }}</div>
+        <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
+          <input class="btn btn-danger btn-sm" type="submit" value="x">
+        </form>
+      </div>
+    {% endif %}
+  {% endfor %}
+  <div class="project-status">In Work</div>
+  {% for task in project.tasks %}
+    {% if task.status == 'In Work' %}
+      <div class="task-card">
+        <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
+        <div>{{ task.description }}</div>
+        <div>Due: {{ task.date_due.date() }}</div>
+        <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
+          <input class="btn btn-danger btn-sm" type="submit" value="x">
+        </form>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+  <div class="project-status">Complete</div>
+  {% for task in project.tasks %}
+    {% if task.status == 'Complete' %}
+      <div class="task-card">
+        <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
+        <div>{{ task.description }}</div>
+        <div>Due: {{ task.date_due.date() }}</div>
+        <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
+          <input class="btn btn-danger btn-sm" type="submit" value="x">
+        </form>
+      </div>
+    {% endif %}
+  {% endfor %}
+  <div>
+    {% if not project.tasks %}
+      <div class="task-card">This project currently has no associated tasks,
+        <a href="{{ url_for('tasks.new_project_task', project_id=project.id) }}">Create One Here!</a>
+      </div>
+    {% endif %}
+  </div>
+</div>

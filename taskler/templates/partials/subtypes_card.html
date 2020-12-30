@@ -4,7 +4,7 @@
     <div class="card-child">
       {{ subtype.type }}
       <form action="{{ url_for('subtypes.delete_subtype', subtype_id=subtype.id) }}" method="POST">
-        <input class="btn btn-danger btn-sm btn-circle" type="submit" value="x">
+        <input class="btn btn-danger btn-sm" type="submit" value="x">
       </form>
     </div>
   {% endfor %}

@@ -29,9 +29,6 @@ def new_task():
     return render_template('tasks/create_task.html', form=form)
 
 
-
-
-
 @tasks.route('/task/all')
 def all_tasks():
     my_tasks = db_session.query(Task).all()
@@ -73,4 +70,11 @@ def update_task(task_id):
 @tasks.route('/task/<int:task_id>/delete', methods=['GET', 'POST'])
 def delete_task(task_id):
     my_task = db_session.query(Task).get(task_id)
-    return render_template('tasks/delete_task.html', task=my_task)
+    if my_task:
+        project_id = my_task.project.id
+        db_session.delete(my_task)
+        db_session.commit()
+        flash('Your task has been deleted!', 'success')
+        return redirect(url_for('projects.project', project_id=project_id))
+    flash('Task deletion failed', 'danger')
+    return render_template(url_for('main.home'))

@@ -12,7 +12,9 @@
     {% endif %}
 
     <div><a class="btn btn-info" href="{{ url_for('tasks.update_task', task_id=task.id) }}">Update</a></div>
-    <div><a class="btn btn-danger" href="{{ url_for('tasks.delete_task', task_id=task.id) }}">Delete</a></div>
+    <form action="url_for('tasks.delete_task', task_id=task.id)" method="POST">
+      <input class="btn btn-danger" type="submit" value="Delete">
+    </form>
 
     {% if task.project %}
       <div class="project-status">Parent project of this task</div>

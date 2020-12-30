@@ -1,62 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-  <div id="project-card">
-    <div class="card-title">{{ project.title }}</div>
-    <div class="card-desc">Description: {{ project.description }}</div>
-    {% if project.start_date %}
-      <p class="card-child">Start Date: {{ project.start_date.date() }}</p>
-    {% else %}
-      <p class="card-child">No Start Date</p>
-    {% endif %}
-    {% if project.end_date %}
-      <p class="card-child">End Date: {{ project.end_date.date() }}</p>
-    {% else %}
-      <p class="card-child">No End Date</p>
-    {% endif %}
-    <p class="card-child">Current Status: {{ project.status }}</p>
-  </div>
-  <div>
-    <div class="project-status">Created</div>
-    {% for task in project.tasks %}
-      {% if task.status == 'Created' %}
-        <div class="task-card">
-          <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
-          <p>{{ task.description }}</p>
-          <p>Due: {{ task.date_due.date() }}</p>
-        </div>
-      {% endif %}
-    {% endfor %}
-    <div class="project-status">In Work</div>
-    {% for task in project.tasks %}
-      {% if task.status == 'In Work' %}
-        <div class="task-card">
-          <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
-          <p>{{ task.description }}</p>
-          <p>Due: {{ task.date_due.date() }}</p>
-        </div>
-      {% endif %}
-    {% endfor %}
-    <div class="project-status">Complete</div>
-    {% for task in project.tasks %}
-      {% if task.status == 'Complete' %}
-        <div class="task-card">
-          <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
-          <p>{{ task.description }}</p>
-          <p>Due: {{ task.date_due.date() }}</p>
-        </div>
-      {% endif %}
-    {% endfor %}
-    <div>
-      {% if not project.tasks %}
-        <div class="task-card">This project currently has no associated tasks,
-          <a href="{{ url_for('tasks.new_project_task', project_id=project.id) }}">Create One Here!</a>
-        </div>
-      {% endif %}
-    </div>
-  </div>
+  {% include "partials/project_card.html" %}
   <div>
     <a class="btn btn-outline-info" href="{{ url_for('projects.new_project_task', project_id=project.id) }}">New Task</a>
+    <form action="{{ url_for('projects.delete_project', project_id=project.id) }}" method="POST">
+      <input class="btn btn-danger" type="submit" value="Delete Project">
+    </form>
   </div>
-  {% block task_form %}
-  {% endblock %}
 {% endblock content %}

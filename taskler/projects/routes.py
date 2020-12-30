@@ -24,7 +24,7 @@ def new_project():
     return render_template('projects/create_project.html', form=form)
 
 
-@projects.route('/project/new/task/<int:project_id>', methods=['GET', 'POST'])
+@projects.route('/project/<int:project_id>/new/task', methods=['GET', 'POST'])
 def new_project_task(project_id):
     form = TaskForm()
     my_project = db_session.query(Project).get(project_id)
@@ -42,12 +42,13 @@ def new_project_task(project_id):
         db_session.commit()
         flash('Your task has been created!', 'success')
         return redirect(url_for('projects.project', project_id=my_project.id))
-    return render_template('tasks/create_project_task.html', form=form, project=my_project)
+    return render_template('projects/create_project_task.html', form=form, project=my_project)
 
 
-@projects.route('/project/all')
-def all_projects():
-    return render_template('projects/all_projects.html')
+# Don't think I need this route any more - all projects displayed in the sidebar
+# @projects.route('/project/all')
+# def all_projects():
+#     return render_template('projects/all_projects.html')
 
 
 @projects.route('/project/<int:project_id>')
@@ -55,3 +56,15 @@ def project(project_id):
     my_project = db_session.query(Project).filter(Project.id == project_id).first()
     project_tasks = my_project.tasks
     return render_template('projects/project.html', project=my_project, tasks=project_tasks)
+
+
+@projects.route('/project/<int:project_id>/delete', methods=['POST'])
+def delete_project(project_id):
+    my_project = db_session.query(Project).get(project_id)
+    if my_project:
+        db_session.delete(my_project)
+        db_session.commit()
+        flash('Your project has been deleted!', 'success')
+        return redirect(url_for('main.home'))
+    flash('Project deletion failed!', 'danger')
+    return redirect(url_for('main.home'))
