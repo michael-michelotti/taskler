@@ -24,3 +24,15 @@ def new_subtype():
 def all_subtypes():
     my_subtypes = db_session.query(Subtype).all()
     return render_template('subtypes/all_subtypes.html', subtypes=my_subtypes)
+
+
+@subtypes.route('/subtype/<int:subtype_id>/delete', methods=['POST'])
+def delete_subtype(subtype_id):
+    my_subtype = db_session.query(Subtype).get(subtype_id)
+    if my_subtype:
+        db_session.delete(my_subtype)
+        db_session.commit()
+        flash('Your subtype has been deleted!', 'success')
+        return redirect(url_for('subtypes.all_subtypes'))
+    flash('Post deletion failed!', 'danger')
+    return redirect(url_for('subtypes.all_subtypes'))

@@ -1,33 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-  {% if title %}
-    <h1>{{ title }}</h1>
-  {% endif %}
-  <div>
-    {% for subtype in subtypes %}
-      <div>
-        <h1>{{ subtype.type }}</h1>
-      </div>
-    {% endfor %}
-  </div>
+  {% include "partials/subtypes_card.html" %}
   <div>
     <form method="POST" action="">
       {{ form.csrf_token }}
       <fieldset>
         <div>
-          {{ form.type.label }}
           {% if form.type.errors %}
             {{ form.type }}
             {% for error in form.type.errors %}
               <span>{{ error }}</span>
             {% endfor %}
           {% else %}
-            {{ form.type }}
+            {{ form.type(class="form-control form-control-sm m-1") }}
           {% endif %}
         </div>
       </fieldset>
       <div>
-        {{ form.submit }}
+        {{ form.submit(class="btn btn-success") }}
       </div>
     </form>
   </div>

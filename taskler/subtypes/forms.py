@@ -6,5 +6,5 @@ from wtforms.validators import DataRequired, Length
 class SubtypeForm(FlaskForm):
     type = StringField('Type',
                        validators=[DataRequired(), Length(max=50)],
-                       render_kw={'placeholder': 'Enter type...'})
+                       render_kw={'placeholder': 'Enter subtype...'})
     submit = SubmitField('Create Subtype')

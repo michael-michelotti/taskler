@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="subtype-card">
-    <div class="subtype-title">All Subtypes</div>
-    {% for subtype in subtypes %}
-      <div class="card-child">{{ subtype.type }}</div>
-    {% endfor %}
-  </div>
-  <div class="btn btn-outline-info">
+  {% include "partials/subtypes_card.html" %}
+  <div class="btn btn-outline-info new-button">
     <a href="{{ url_for('subtypes.new_subtype') }}">New</a>
   </div>
 {% endblock content %}

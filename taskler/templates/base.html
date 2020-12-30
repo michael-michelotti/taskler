@@ -34,31 +34,25 @@
           </ul>
         </li>
         <li>
+          <a href="{{ url_for('projects.new_project') }}">+ New Project</a>
+        </li>
+        <li>
           <a href="{{ url_for('subtypes.all_subtypes') }}">Create New Subtypes</a>
         </li>
-<!--        <div class="m-1">
-          <a class="mr-1" href="{{ url_for('projects.new_project') }}">New Project</a>
-          <a href="{{ url_for('projects.all_projects') }}">All Projects</a>
-        </div>
-        <div class="m-1">
-          <a class="mr-1" href="{{ url_for('tasks.new_task') }}">New Task</a>
-          <a href="{{ url_for('tasks.all_tasks') }}">All Tasks</a>
-        </div>-->
-
       </ul>
     </nav>
-    <div>
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-    </div>
     <div id="content" class="container">
+      <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
       {% block content %}
       {% endblock %}
     </div>
