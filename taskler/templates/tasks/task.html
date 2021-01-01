@@ -11,11 +11,6 @@
       <div class="card-child">Due: {{ task.date_due.date() }}</div>
     {% endif %}
 
-    <div><a class="btn btn-info" href="{{ url_for('tasks.update_task', task_id=task.id) }}">Update</a></div>
-    <form action="url_for('tasks.delete_task', task_id=task.id)" method="POST">
-      <input class="btn btn-danger" type="submit" value="Delete">
-    </form>
-
     {% if task.project %}
       <div class="project-status">Parent project of this task</div>
       <div><a href="{{ url_for('projects.project', project_id=task.project.id) }}">{{ task.project.title }}</a></div>
@@ -31,5 +26,9 @@
     {% else %}
       <div class="project-status">There are no subtypes associated with this task</div>
     {% endif %}
+    <div><a class="btn btn-info" href="{{ url_for('tasks.update_task', task_id=task.id) }}">Update</a></div>
+    <form action="url_for('tasks.delete_task', task_id=task.id)" method="POST">
+      <input class="btn btn-danger" type="submit" value="Delete">
+    </form>
   </div>
 {% endblock content %}

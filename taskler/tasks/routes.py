@@ -3,6 +3,8 @@ from taskler.models import Task
 from taskler.tasks.forms import TaskForm
 from taskler.db import db_session, init_db
 from taskler.models import Project, Subtype
+from flask import current_app
+import datetime
 
 
 tasks = Blueprint('tasks', __name__)
@@ -37,9 +39,10 @@ def all_tasks():
 
 @tasks.route('/task/<int:task_id>')
 def task(task_id):
+
     init_db()
     my_task = db_session.query(Task).get(task_id)
-    return render_template('tasks/task.html', task=my_task)
+    return render_template('tasks/task.html', task=my_task, current_app=current_app)
 
 
 @tasks.route('/task/<int:task_id>/update', methods=['GET', 'POST'])
@@ -67,7 +70,7 @@ def update_task(task_id):
     return render_template('tasks/create_task.html', title='Update Task', form=form)
 
 
-@tasks.route('/task/<int:task_id>/delete', methods=['GET', 'POST'])
+@tasks.route('/task/<int:task_id>/delete', methods=['POST'])
 def delete_task(task_id):
     my_task = db_session.query(Task).get(task_id)
     if my_task:

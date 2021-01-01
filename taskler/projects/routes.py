@@ -3,6 +3,8 @@ from taskler.models import Project, Task, Subtype
 from taskler.db import db_session
 from taskler.projects.forms import ProjectForm
 from taskler.tasks.forms import TaskForm
+from flask import current_app
+import pytz
 
 
 projects = Blueprint('projects', __name__)
@@ -12,10 +14,12 @@ projects = Blueprint('projects', __name__)
 def new_project():
     form = ProjectForm()
     if form.validate_on_submit():
+        local_start_time = form.start_date.data.astimezone(current_app.config['TIMEZONE'])
+        local_end_date = form.end_date.data.astimezone(current_app.config['TIMEZONE'])
         my_project = Project(title=form.title.data,
                              description=form.description.data,
-                             start_date=form.start_date.data,
-                             end_date=form.end_date.data,
+                             start_date=local_start_time.astimezone(pytz.utc),
+                             end_date=local_end_date.astimezone(pytz.utc),
                              status=form.status.data)
         db_session.add(my_project)
         db_session.commit()
@@ -24,14 +28,14 @@ def new_project():
     return render_template('projects/create_project.html', form=form)
 
 
-@projects.route('/project/<int:project_id>/new/task', methods=['GET', 'POST'])
+@projects.route('/project/<int:project_id>/new-task', methods=['GET', 'POST'])
 def new_project_task(project_id):
     form = TaskForm()
     my_project = db_session.query(Project).get(project_id)
     if form.validate_on_submit():
         my_task = Task(title=form.title.data,
                        description=form.description.data,
-                       date_due=form.date_due.data,
+                       date_due=form.date_due.data.astimezone(pytz.utc),
                        project_id=my_project.id,
                        status=form.status.data)
         task_subtypes = []

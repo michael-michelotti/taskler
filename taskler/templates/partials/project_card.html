@@ -20,7 +20,11 @@
       <div class="task-card">
         <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
         <div>{{ task.description }}</div>
-        <div>Due: {{ task.date_due.date() }}</div>
+        {% if task.date_due %}
+          <div>Due: {{ task.date_due.date() }}</div>
+        {% else %}
+          <div>No Due Date</div>
+        {% endif %}
         <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
           <input class="btn btn-danger btn-sm" type="submit" value="x">
         </form>
@@ -33,12 +37,15 @@
       <div class="task-card">
         <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
         <div>{{ task.description }}</div>
-        <div>Due: {{ task.date_due.date() }}</div>
+        {% if task.date_due %}
+          <div>Due: {{ task.date_due.date() }}</div>
+        {% else %}
+          <div>No Due Date</div>
+        {%  endif %}
         <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
           <input class="btn btn-danger btn-sm" type="submit" value="x">
         </form>
       </div>
-
     {% endif %}
   {% endfor %}
   <div class="project-status">Complete</div>
@@ -47,7 +54,11 @@
       <div class="task-card">
         <a href="{{ url_for('tasks.task', task_id=task.id) }}">{{ task.title }}</a>
         <div>{{ task.description }}</div>
-        <div>Due: {{ task.date_due.date() }}</div>
+        {% if task.date_due %}
+          <div>Due: {{ task.date_due.date() }}</div>
+        {% else %}
+          <div>No Due Date</div>
+        {% endif %}
         <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
           <input class="btn btn-danger btn-sm" type="submit" value="x">
         </form>
@@ -57,7 +68,7 @@
   <div>
     {% if not project.tasks %}
       <div class="task-card">This project currently has no associated tasks,
-        <a href="{{ url_for('tasks.new_project_task', project_id=project.id) }}">Create One Here!</a>
+        <a href="{{ url_for('projects.new_project_task', project_id=project.id) }}">Create One Here!</a>
       </div>
     {% endif %}
   </div>

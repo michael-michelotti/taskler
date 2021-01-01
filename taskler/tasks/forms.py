@@ -2,7 +2,7 @@ import datetime
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, SelectMultipleField
-from wtforms.fields.html5 import DateTimeField
+from wtforms.fields.html5 import DateTimeLocalField
 from wtforms.validators import DataRequired, Length, Optional
 
 from taskler.db import db_session
@@ -26,10 +26,13 @@ class TaskForm(FlaskForm):
     description = TextAreaField('Description',
                                 validators=[DataRequired(), Length(max=300)],
                                 render_kw={'placeholder': 'Enter description...'})
-    start_date = DateTimeField('Start Date',
-                               default=datetime.datetime.now())
-    date_due = DateTimeField('Due Date',
-                             format='%m/%d/%Y')
+    start_date = DateTimeLocalField('Start Date',
+                                    default=datetime.datetime.now(),
+                                    validators=[Optional()],
+                                    format='%Y-%m-%dT%H:%M')
+    date_due = DateTimeLocalField('Due Date',
+                                  validators=[Optional()],
+                                  format='%Y-%m-%dT%H:%M')
     project_name = SelectField('Parent Project',
                                choices=fetch_all_titles(db_session, Project),
                                validators=[Optional()])
