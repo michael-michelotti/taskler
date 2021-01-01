@@ -1,10 +1,9 @@
-from flask import render_template, Blueprint, flash, redirect, url_for
+from flask import render_template, Blueprint, flash, redirect, url_for, request
 from taskler.models import Project, Task, Subtype
 from taskler.db import db_session
 from taskler.projects.forms import ProjectForm
 from taskler.tasks.forms import TaskForm
-from flask import current_app
-import pytz
+from taskler.utils import local_to_utc
 
 
 projects = Blueprint('projects', __name__)
@@ -14,18 +13,36 @@ projects = Blueprint('projects', __name__)
 def new_project():
     form = ProjectForm()
     if form.validate_on_submit():
-        local_start_time = form.start_date.data.astimezone(current_app.config['TIMEZONE'])
-        local_end_date = form.end_date.data.astimezone(current_app.config['TIMEZONE'])
         my_project = Project(title=form.title.data,
                              description=form.description.data,
-                             start_date=local_start_time.astimezone(pytz.utc),
-                             end_date=local_end_date.astimezone(pytz.utc),
+                             start_date=local_to_utc(form.start_date.data),
+                             end_date=local_to_utc(form.end_date.data),
                              status=form.status.data)
         db_session.add(my_project)
         db_session.commit()
         flash('Your project has been created!', 'success')
         return redirect(url_for('projects.project', project_id=my_project.id))
     return render_template('projects/create_project.html', form=form)
+
+
+@projects.route('/project/<int:project_id>/update', methods=['GET', 'POST'])
+def update_project(project_id):
+    form = ProjectForm()
+    my_project = db_session.query(Project).filter(Project.id == project_id).first()
+    if form.validate_on_submit():
+        my_project.start_date = form.start_date.data
+        my_project.end_date = form.end_date.data
+        my_project.title = form.title.data
+        my_project.description = form.description.data
+        db_session.add(my_project)
+        db_session.commit()
+        return redirect(url_for('projects.project', project_id=my_project.id))
+    elif request.method == 'GET':
+        form.start_date.data = my_project.start_date
+        form.end_date.data = my_project.end_date
+        form.title.data = my_project.title
+        form.description.data = my_project.description
+    return render_template('projects/update_project.html', form=form)
 
 
 @projects.route('/project/<int:project_id>/new-task', methods=['GET', 'POST'])
@@ -35,7 +52,8 @@ def new_project_task(project_id):
     if form.validate_on_submit():
         my_task = Task(title=form.title.data,
                        description=form.description.data,
-                       date_due=form.date_due.data.astimezone(pytz.utc),
+                       date_due=local_to_utc(form.date_due.data),
+                       start_date=local_to_utc(form.start_date.data),
                        project_id=my_project.id,
                        status=form.status.data)
         task_subtypes = []
@@ -47,12 +65,6 @@ def new_project_task(project_id):
         flash('Your task has been created!', 'success')
         return redirect(url_for('projects.project', project_id=my_project.id))
     return render_template('projects/create_project_task.html', form=form, project=my_project)
-
-
-# Don't think I need this route any more - all projects displayed in the sidebar
-# @projects.route('/project/all')
-# def all_projects():
-#     return render_template('projects/all_projects.html')
 
 
 @projects.route('/project/<int:project_id>')

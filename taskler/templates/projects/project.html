@@ -2,6 +2,7 @@
 {% block content %}
   {% include "partials/project_card.html" %}
   <div>
+    <a class="btn btn-info" href="{{ url_for('projects.update_project', project_id=project.id) }}">Update</a>
     <a class="btn btn-outline-info" href="{{ url_for('projects.new_project_task', project_id=project.id) }}">New Task</a>
     <form action="{{ url_for('projects.delete_project', project_id=project.id) }}" method="POST">
       <input class="btn btn-danger" type="submit" value="Delete Project">

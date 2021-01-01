@@ -1,8 +1,12 @@
 from flask import Flask
+from flask_moment import Moment
 
 from taskler.config import Config
 from taskler.db import db_session
 from taskler.models import Project
+
+
+moment = Moment()
 
 
 def create_app(test_config=None):
@@ -17,6 +21,7 @@ def create_app(test_config=None):
     app.register_blueprint(tasks)
     app.register_blueprint(projects)
     app.register_blueprint(subtypes)
+    moment.init_app(app)
 
     @app.context_processor
     def get_projects():
